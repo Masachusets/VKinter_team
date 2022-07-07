@@ -21,7 +21,7 @@ def processing_photos(user_id):
 def processing_applicant(user_id):
     user = vk.users.get(user_id=[user_id], fields='bdate,city,country,sex')[0]
     photos = processing_photos(user['id'])
-    user_url = 'https://vk.com/' + str(user_id)
+    user_url = 'https://vk.com/id' + str(user_id)
     return f"{user['first_name']} {user['last_name']} {user_url} {photos}"
 
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     user = vk.users.get(user_id=['loggvi'], fields='bdate,city,country,sex')[0]
     user_city = user['city']['id']
     user_sex = user['sex']
-    user_age_indays = datetime.date(datetime.now()) - datetime.date(datetime.strptime(user['bdate'], '%d.%m.%Y'))
-    user_age = user_age_indays.days // 365
+    user_age_days = datetime.date(datetime.now()) - datetime.date(datetime.strptime(user['bdate'], '%d.%m.%Y'))
+    user_age = user_age_days.days // 365
     for i in search_applicants(user_age, user_sex, user_city):
         pprint(i)
